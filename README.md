@@ -43,12 +43,50 @@ These columns, among others, will be leveraged to answer our central question. U
 
 Our analysis aims to not only chart the historical trends but also to forecast future vulnerabilities, guiding investments in infrastructure resilience and disaster response planning. This dataset has direct implications for the reliability of their electricity supply and the robustness of the national power grid against an array of threats and natural challenges. ​​
 
+<iframe src="assets/10-80-enrollment.html" width=800 height=600 frameBorder=0></iframe>
+---
+
+## Data Cleaning and Exploratory Data Analysis
+
+
+**Data Clearning**
+
+An examination of missingness across the dataset reveals significant variability. A notable observation is that the HURRICANE.NAMES column has a very high proportion of missing values at 95.31%, suggesting hurricanes are not a common cause of power outages in the dataset. The DEMAND.LOSS.MW and CUSTOMERS.AFFECTED columns have moderate missingness, 45.96% and 28.88% respectively, indicating potential gaps in crucial impact data.
+
+For columns with low to moderate missingness, strategies such as mean or median imputation for numerical columns, and mode imputation or predictive modeling for categorical columns are considered. High missingness columns like HURRICANE.NAMES may be dropped if deemed non-essential, or filled with domain-specific knowledge if crucial. For key columns like DEMAND.LOSS.MW and CUSTOMERS.AFFECTED, more complex imputation methods such as regression or machine learning could be employed, given their importance in assessing the outage impact.
+
+Temporal columns such as OUTAGE.START and OUTAGE.RESTORATION demand specific strategies like interpolation, reflecting the necessity for precise time-related data in outage analysis. Complete case analysis might be an option for certain studies where the integrity of each data point is critical, and the missingness is not systematic.
+
+In the cleanup process, the dataset undergoes preprocessing where redundant or extraneous rows and columns are removed, such as the HURRICANE.NAMES column due to its high missingness. The original datetime columns are consolidated into OUTAGE.START and OUTAGE.RESTORATION using appropriate datetime formats for analysis. Subsequently, the cleaned dataset is saved as 'outage.csv' for further use.
+
+Below is head to the cleaned dataset with the most important columns shown
+
+<iframe src="assets/cleaned_data_set_head.png" width=800 height=600 frameBorder=0></iframe>
+
 
 ---
 
-## Cleaning and EDA
+**Univariate Analysis**
 
-<iframe src="assets/10-80-enrollment.html" width=800 height=600 frameBorder=0></iframe>
+To understand the data's distribution, univariate plots are created for OUTAGE.DURATION using histograms, and for CUSTOMERS.AFFECTED using box plots. These visualizations reveal the spread and central tendencies of these key variables. Annotations such as mean and median are added to the box plot for CUSTOMERS.AFFECTED to provide quick statistical insights.
+
+**Bivariate Analysis**
+
+Bivariate analyses involve creating scatter plots to explore relationships between variables like OUTAGE.DURATION and CUSTOMERS.AFFECTED, as well as between OUTAGE.DURATION and DEMAND.LOSS.MW. These plots are instrumental in identifying trends and correlations between the severity of an outage and its impact on customers and demand loss.
+
+To examine the effect of climate on power outages, the average OUTAGE.DURATION is plotted against CLIMATE.CATEGORY, offering insights into how different climate conditions may influence outage lengths. Additionally, scatter plots with trendlines are employed to dissect the interaction between outage duration, customers affected, and climate categories.
+
+**Interesting Aggregates**
+
+Finally, group and pivot table analyses are conducted to summarize average OUTAGE.DURATION by CLIMATE.CATEGORY, total CUSTOMERS.AFFECTED by NERC.REGION, and to create a comprehensive pivot table that cross-references the CLIMATE.CATEGORY and U.S._STATE with average OUTAGE.DURATION and total CUSTOMERS.AFFECTED. This multidimensional view is essential to contextualize the outages within various regional and climatic parameters.
+
+The missingness analysis component of the code is pivotal for understanding data completeness and integrity, directing subsequent data cleaning, imputation, and analysis efforts, and ensuring the reliability of conclusions drawn from this significant dataset on power outages.
+
+
+
+
+
+
 
 ---
 
