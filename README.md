@@ -114,5 +114,53 @@ complex to diagnose. To better understand this missingness and potentially move 
 
 ## Hypothesis Testing
 
+**Permutation Test Description for CAUSE.CATEGORY.DETAIL Missingness depedent on CAUSE.CATEGORY**
+
+I performed a permutation test to investigate the dependency of missing data 
+in the "CAUSE.CATEGORY.DETAIL" column on other columns in the dataset. It starts by creating a
+binary column to represent the missingness status of the "CAUSE.CATEGORY.DETAIL" entries. Then, 
+it uses a chi-square test to examine the initial association between the categories of cause and
+the missingness of the details.
+
+Following this, the code runs a permutation test, which involves shuffling the missingness column
+and recalculating the chi-square statistic multiple times to create a distribution of chi-square 
+values under the null hypothesis (that there's no association). By comparing the original chi-square 
+statistic to this distribution, it computes a permutation p-value, giving a sense of how extreme the
+observed statistic is.
+
+The permutation test results indicate a statistically significant dependency of missingness in the 
+"CAUSE.CATEGORY.DETAIL" column on the "CAUSE.CATEGORY," implying an NMAR scenario. With an observed 
+chi-square statistic of 442.4872 and a permutation p-value of 0.0, the evidence strongly suggests that
+the likelihood of details being missing is not random but tied to the specific cause categories. This 
+pattern of missingness denotes that certain cause categories might inherently prompt more omissions in 
+the corresponding detail field. To transition our understanding from NMAR to MAR, additional investigation 
+into the data collection process and potential biases related to cause categories is necessary. This would 
+enable us to determine if the missingness can be attributed to observable variables rather than the missing data itself.
+
+
+
+**Permutation Test Summary for CAUSE.CATEGORY.DETAIL Missingness dependent OUTAGE.DURATION Analysis**
+
+
+The analysis explored the relationship between the duration of power outages and the missingness of 
+detailed cause categories in a dataset of power outages. Approximately 30.8% of the "CAUSE.CATEGORY.DETAIL" 
+entries are missing, while about 3.2% of the "OUTAGE.DURATION" entries are missing. A permutation test was 
+conducted to determine if the missingness of the "CAUSE.CATEGORY.DETAIL" is associated with the "OUTAGE.DURATION".
+
+The observed mean difference in outage duration between outages with missing and non-missing "CAUSE.CATEGORY.DETAIL"
+was approximately -9.85 hours, indicating that outages with missing detail information tend to be shorter.
+The permutation test yielded a p-value of 0.087. This p-value suggests that the observed association between
+outage duration and the missingness of cause category detail could occur by chance about 8.7% of the time 
+under the null hypothesis of no association.
+
+<iframe src="assets/Cause_Category_Missingness.html" width=1600 height=1000 frameBorder=0></iframe>
+
+In the context of missing data mechanisms, the findings do not strongly indicate a Non-Missing At Random (NMAR)
+situation where the probability of missingness depends on the unobserved data itself. Instead, the evidence 
+towards NMAR is weak, given the relatively high p-value (above the conventional threshold of 0.05), and 
+suggests that further investigation or data might be needed to conclusively determine the nature of the missingness.
+ 
+
+
 
 ---
