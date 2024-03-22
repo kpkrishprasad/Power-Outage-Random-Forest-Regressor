@@ -43,9 +43,7 @@ These columns, among others, will be leveraged to answer our central question. U
 
 Our analysis aims to not only chart the historical trends but also to forecast future vulnerabilities, guiding investments in infrastructure resilience and disaster response planning. This dataset has direct implications for the reliability of their electricity supply and the robustness of the national power grid against an array of threats and natural challenges. ​​
 
-<iframe src="assets/10-80-enrollment.html" width=800 height=600 frameBorder=0></iframe>
 ---
-
 ## Data Cleaning and Exploratory Data Analysis
 
 
@@ -193,16 +191,99 @@ used, and it's always possible that different data or methods could yield differ
 ---
 
 ## Framing a Prediction Problem
+
+The task of forecasting the duration of major power outages is a regression problem. The response variable
+in the model is 'OUTAGE.DURATION', chosen because it quantitatively captures the impact of an outage, providing a clear measure
+of severity. To evaluate the model's performance, we used the mean squared error (MSE) and the R-squared score. MSE was selected 
+because it reflects the average squared difference between the estimated values and the actual value, which is crucial for
+assessing the prediction accuracy in terms of the same unit as the response variable. The R squared
+score was used to understand the proportion of variance in the outage duration that our model could explain.
+
+Those metrics were favored over others, like mean absolute error, because MSE punishes larger errors more severely, which is
+appropriate in the context of power outages where severe underestimations could be more costly. The R squared score is a
+standardized indicator, making it easier to communicate the model's performance.
+
+It's important to note that the features selected for the model are based on data that would be available at the time of
+prediction. These include the anomaly level to represent weather conditions, the state's per capita real gross state product
+to account for economic status, and the percentage of the urban population to reflect the density of the potentially
+ affected area. We avoided using data that would not be available before an outage, such as the exact cause, since our aim
+was to make predictions before an event occurs.
+
+The current model serves as a starting point, and based on our analysis, further improvements are necessary. In future iterations, we
+will explore the inclusion of more nuanced features that could provide a better prediction, such as infrastructure age or historical
+outage data, always considering the information available prior to an outage event for our predictions.
+
+
+
 ---
 
 ## Baseline Model
+
+The linear regression model in question is designed to predict the duration of power outages, utilizing three specific features. These features are 'ANOMALY.LEVEL', which is likely an ordinal variable indicating the level of anomaly in a systematic order; 'PC.REALGSP.STATE', which appears to be a quantitative variable that could denote the per capita real Gross State Product, reflective of economic data on a state level; and 'POPPCT_URBAN', another quantitative variable representing the percentage of the population residing in urban settings.
+
+In the model's preparation phase, the dataset is cleansed of any instances with missing target values to ensure that the model trains on a complete dataset. The target variable, 'OUTAGE.DURATION', being a continuous one, lends itself well to the regression analysis conducted by the model.
+
+A split of the data is performed, segregating it into a training set, which constitutes 80% of the data, and a test set, which makes up the remaining 20%. This split is essential for the model's validation, allowing for performance assessment on data that was not encountered during the training phase.
+
+Upon training the linear regression model with the training dataset, predictions are made on the test set. The model's performance is subsequently evaluated using two metrics: the mean squared error (MSE) and the coefficient of determination, commonly referred to as R-squared (R²). The MSE provides insight into the average of the squares of the errors, essentially measuring the average squared difference between the estimated values and the actual value. A low MSE indicates a high level of precision in the model's predictions. R², on the other hand, quantifies the percentage of the variance in the dependent variable that is explained by the independent variables in the model. An R² value close to 1 implies that the model explains a large portion of the variance in the target variable.
+
+It is also critical to note that the reliability of the model hinges on the assumption that the relationship between the independent variables and the dependent variable is linear. Any deviations from this assumption, such as non-linear relationships, outliers, or high leverage points, could potentially undermine the model's performance.
+
+
+The negative R squared score of -0.003 indicates that the model's predictive ability is worse than a simple linear regression model that would
+predict the mean outage duration for all observations. This implies that the three features selected—temperature anomaly level,
+per capita real gross state product, and the percentage of urban population—are not sufficient to capture the complex factors 
+that influence outage duration.
+
+The large MSE further confirms that the predictions are, on average, far from the actual outage durations, indicating high error
+variance. This suggests that outage duration may be influenced by factors not included in the model, such as specific details about
+the infrastructure, the precise nature of the weather events, or other socio-economic factors.
+
+To improve the model's performance, additional features that could better explain the variance in the outage duration should be
+considered. Moreover, exploring more sophisticated modeling techniques or data transformations could help in capturing the non-linear 
+relationships that a simple linear regression model may miss. The current model serves as a baseline from which more refined and 
+accurate predictive models could be developed.
+
+
 ---
 
 ## Final Model
+
+In the enhanced model, features such as 'ANOMALY.LEVEL', 'POPPCT_URBAN', 'CUSTOMERS.AFFECTED', 'COM.PERCEN', and 'IND.CUSTOMERS' are included because they are believed to capture the complexity and the impact of power outages. 'ANOMALY.LEVEL' likely signifies the severity of an anomaly which could correlate with the length of the outage. Since urban populations ('POPPCT_URBAN') may have more infrastructure but also potentially more efficient repair services, this feature could impact outage duration. The number of 'CUSTOMERS.AFFECTED' reflects the scale of an outage and might influence the urgency and resources allocated for repairs. 'COM.PERCEN' and 'IND.CUSTOMERS' could serve as proxies for the commercial importance and industrial demand within an affected area, affecting how quickly services are restored.
+
+For these features, specific transformations are applied to normalize their distributions. 'ANOMALY.LEVEL' undergoes a quantile transformation to a normal distribution, potentially stabilizing variance and making the model less sensitive to outliers. 'CUSTOMERS.AFFECTED' is log-transformed to address its likely right-skewed distribution, which helps in reducing the influence of extreme values.
+
+The model chosen for the prediction task is the RandomForestRegressor, known for handling non-linear relationships and interactions between features without requiring extensive feature engineering. It operates by building a multitude of decision trees at training time and outputting the mean prediction of the individual trees. The hyperparameters were not specified in the provided code; however, tuning these parameters is critical in improving model performance. Methods like grid search or random search could have been employed to find the optimal set of hyperparameters.
+
+The final model achieved a significant improvement with an R-squared value of 0.464107046741818 compared to the previous R-squared of -0.003. This improvement suggests that the RandomForestRegressor, along with the feature transformations and selections made, resulted in a model that better captures the variance in the data, providing a more accurate and robust prediction of outage durations. The mean squared error is not provided, but a higher R-squared value alone indicates a better fit to the data.
+
 ---
 
 ## Fairness Analysis
 ---
+
+Choice of Group X and Group Y:
+In the analysis, Group X comprises data points representing populations less than 10 million. In contrast, Group Y includes populations equal to or exceeding the 10 million mark. This division is grounded in the hypothesis that the size of a population may influence the model's prediction of outage durations due to factors like infrastructure complexity and response capabilities.
+
+Evaluation Metric:
+Root Mean Squared Error (RMSE) has been chosen as the metric for evaluation. RMSE provides a clear indication of the model's accuracy by measuring the magnitude of the error in the model's predictions. It is particularly useful for regression problems and offers a straightforward interpretation of model performance.
+
+Null and Alternative Hypotheses:
+The Null Hypothesis (H0) posits that the model does not discriminate between large and small populations regarding outage duration predictions. Specifically, it suggests that the model's prediction errors, as quantified by RMSE, are consistent between Groups X and Y, and any observed variation is attributable to random fluctuations rather than systematic bias.
+
+The Alternative Hypothesis (H1), however, proposes that the model exhibits a bias. It claims there is a statistically significant disparity in RMSE when comparing predictions for smaller populations (Group X) with larger ones (Group Y), implying that the model might be unfairly penalizing or favoring one group over the other.
+
+Test Statistic:
+The chosen test statistic is the absolute difference in RMSE between Group X and Group Y. This value is indicative of the disparity in prediction errors and serves as a key indicator in the fairness analysis.
+
+Significance Level:
+Although not explicitly stated in the code, the analysis generally adheres to a conventional significance level of α = 0.05. This threshold is a commonly accepted benchmark for statistical tests, below which the null hypothesis would be rejected in favor of the alternative.
+
+Resulting p-value:
+The permutation test yields a p-value, which in this case stands at 0.685. This p-value measures the probability of observing the computed difference in RMSE (or a more extreme one) under the assumption that the null hypothesis is true.
+
+Conclusion Based on p-value:
+Given the obtained p-value of 0.685, which is substantially higher than the conventional significance level of 0.05, there is insufficient evidence to reject the null hypothesis. We therefore conclude that the model does not show a statistically significant difference in performance when predicting outage durations for populations below and above 10 million. This suggests that the model is fair in this respect.
 
 
 
