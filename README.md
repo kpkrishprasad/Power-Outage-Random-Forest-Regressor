@@ -162,5 +162,34 @@ suggests that further investigation or data might be needed to conclusively dete
  
 
 
-
 ---
+## Hypothesis Testing
+
+For the hypothesis testing component of our analysis, we formulated two hypotheses concerning the relationship between
+economic characteristics and the severity of power outages. The null hypothesis (H0) stated that there is no significant
+association between a state's per capita real gross state product (PC.REALGSP.STATE) and the duration of power outages
+(OUTAGE.DURATION). Conversely, the alternative hypothesis (H1) posited that a significant association does exist.
+
+The Pearson correlation coefficient served as our test statistic due to its suitability in measuring the strength of a 
+linear relationship between two continuous variables. We selected a permutation test for our analysis, a non-parametric 
+method that makes no assumptions about the distribution of the data, thus offering flexibility and robustness against 
+non-normal data distributions. The significance level (alpha) was set at the conventional threshold of 0.05, offering a 
+balance between sensitivity to detect true associations and caution against false positives.
+
+Upon conducting the permutation test, with 10,000 replicates to ensure the stability of our p-value estimate, we calculated
+an observed correlation coefficient of approximately -0.0064. This value indicates a negligible inverse relationship 
+between economic characteristics and outage duration. The permutation test yielded a p-value of 0.5643, significantly 
+above our alpha threshold, suggesting that the observed correlation could well have occurred by chance under the null hypothesis.
+
+Consequently, we do not reject the null hypothesis. Our results suggest that there is no evidence of a significant association
+between the economic characteristic of per capita real gross state product and the severity of power outages, as measured 
+by their duration, within the dataset.
+
+Our choices were appropriate for the question at hand because they allowed us to directly measure the relationship between 
+two key variables of interest using a reliable statistical method. Moreover, by using a permutation test, we avoided the 
+potential pitfalls of parametric assumptions that may not have been satisfied.
+
+It's crucial to note that the conclusion is not absolute; while we found no evidence to support the alternative hypothesis, this 
+does not prove that no relationship exists. Other economic characteristics not analyzed here may still influence outage
+severity, or the relationship may be non-linear or moderated by other factors. Our conclusion is based on the dataset and methods
+used, and it's always possible that different data or methods could yield different results.
