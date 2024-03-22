@@ -61,24 +61,33 @@ In the cleanup process, the dataset undergoes preprocessing where redundant or e
 
 Below is head to the cleaned dataset with the most important columns shown
 
-<iframe src="assets/cleaned_dataset_head.png" width=800 height=600 frameBorder=0></iframe>
+<iframe src="assets/cleaned_dataset_head.png" width=1600 height=600 frameBorder=0></iframe>
 
 
 ---
 
 **Univariate Analysis**
 
-To understand the data's distribution, univariate plots are created for OUTAGE.DURATION using histograms, and for CUSTOMERS.AFFECTED using box plots. These visualizations reveal the spread and central tendencies of these key variables. Annotations such as mean and median are added to the box plot for CUSTOMERS.AFFECTED to provide quick statistical insights.
+To understand the data's distribution, univariate plots are created for OUTAGE.DURATION using histograms. This visualization reveals the spread and central tendencies of these key variables. 
+
+<iframe src="assets/univariate_histogram.html" width=1600 height=600 frameBorder=0></iframe>
+
 
 **Bivariate Analysis**
 
-Bivariate analyses involve creating scatter plots to explore relationships between variables like OUTAGE.DURATION and CUSTOMERS.AFFECTED, as well as between OUTAGE.DURATION and DEMAND.LOSS.MW. These plots are instrumental in identifying trends and correlations between the severity of an outage and its impact on customers and demand loss.
+Bivariate analyses involve creating scatter plots to explore relationships between variables like OUTAGE.DURATION and CUSTOMERS.AFFECTED. This plot are instrumental in identifying trends and correlations between the severity of an outage and its impact on customers and demand loss.
 
 To examine the effect of climate on power outages, the average OUTAGE.DURATION is plotted against CLIMATE.CATEGORY, offering insights into how different climate conditions may influence outage lengths. Additionally, scatter plots with trendlines are employed to dissect the interaction between outage duration, customers affected, and climate categories.
 
+<iframe src="assets/bivariate_histogram.html" width=1600 height=600 frameBorder=0></iframe>
+
+
 **Interesting Aggregates**
 
-Finally, group and pivot table analyses are conducted to summarize average OUTAGE.DURATION by CLIMATE.CATEGORY, total CUSTOMERS.AFFECTED by NERC.REGION, and to create a comprehensive pivot table that cross-references the CLIMATE.CATEGORY and U.S._STATE with average OUTAGE.DURATION and total CUSTOMERS.AFFECTED. This multidimensional view is essential to contextualize the outages within various regional and climatic parameters.
+Finally, a pivot table analys is conducted to summarize average OUTAGE.DURATION by CLIMATE.CATEGORY, total CUSTOMERS.AFFECTED by NERC.REGION, and to create a comprehensive pivot table that cross-references the CLIMATE.CATEGORY and U.S._STATE with average OUTAGE.DURATION and total CUSTOMERS.AFFECTED. This multidimensional view is essential to contextualize the outages within various regional and climatic parameters.
+
+<iframe src="assets/pivot_table.png" width=1600 height=1000 frameBorder=0></iframe>
+
 
 The missingness analysis component of the code is pivotal for understanding data completeness and integrity, directing subsequent data cleaning, imputation, and analysis efforts, and ensuring the reliability of conclusions drawn from this significant dataset on power outages.
 
