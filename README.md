@@ -61,7 +61,7 @@ In the cleanup process, the dataset undergoes preprocessing where redundant or e
 
 Below is head to the cleaned dataset with the most important columns shown
 
-<iframe src="assets/cleaned_data_set_head.png" width=800 height=600 frameBorder=0></iframe>
+<iframe src="assets/cleaned_dataset_head.png" width=800 height=600 frameBorder=0></iframe>
 
 
 ---
