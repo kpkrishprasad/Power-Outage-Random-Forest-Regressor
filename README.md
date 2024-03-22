@@ -99,21 +99,16 @@ The missingness analysis component of the code is pivotal for understanding data
 
 ---
 
+
+
+
 ## Assessment of Missingness
 
-Here's what a Markdown table looks like. Note that the code for this table was generated _automatically_ from a DataFrame, using
+Based on preliminary analysis, I believe the "CAUSE.CATEGORY.DETAIL" column in our dataset may exhibit characteristics of being NMAR, or Not Missing At Random. The pattern of missingness seems to depend on the 
+unobserved data itself, suggesting that details are more frequently omitted when the cause is less clear or more
+complex to diagnose. To better understand this missingness and potentially move it towards MAR (Missing At Random), additional contextual information regarding each incident's circumstances and the data collection process would be invaluable. Interviews with the data entry personnel or field technicians could provide insights into whether certain types of cause details are systematically harder to ascertain, which may lead to their absence in the dataset. If it is found that the likelihood of a "CAUSE.CATEGORY.DETAIL" being missing is independent of its actual content after obtaining further information, we could then consider the missingness to be MAR rather than NMAR.
 
-```py
-print(counts[['Quarter', 'Count']].head().to_markdown(index=False))
-```
 
-| Quarter     |   Count |
-|:------------|--------:|
-| Fall 2020   |       3 |
-| Winter 2021 |       2 |
-| Spring 2021 |       6 |
-| Summer 2021 |       4 |
-| Fall 2021   |      55 |
 
 ---
 
