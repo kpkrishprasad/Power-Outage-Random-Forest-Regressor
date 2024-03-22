@@ -86,7 +86,7 @@ To examine the effect of climate on power outages, the average OUTAGE.DURATION i
 
 Finally, a pivot table analys is conducted to summarize average OUTAGE.DURATION by CLIMATE.CATEGORY, total CUSTOMERS.AFFECTED by NERC.REGION, and to create a comprehensive pivot table that cross-references the CLIMATE.CATEGORY and U.S._STATE with average OUTAGE.DURATION and total CUSTOMERS.AFFECTED. This multidimensional view is essential to contextualize the outages within various regional and climatic parameters.
 
-<iframe src="assets/pivot_table.png" width=1600 height=1000 frameBorder=0></iframe>
+<iframe src="assets/pivot_table.png" width=1200 height=600 frameBorder=0></iframe>
 
 
 The missingness analysis component of the code is pivotal for understanding data completeness and integrity, directing subsequent data cleaning, imputation, and analysis efforts, and ensuring the reliability of conclusions drawn from this significant dataset on power outages.
@@ -109,10 +109,6 @@ unobserved data itself, suggesting that details are more frequently omitted when
 complex to diagnose. To better understand this missingness and potentially move it towards MAR (Missing At Random), additional contextual information regarding each incident's circumstances and the data collection process would be invaluable. Interviews with the data entry personnel or field technicians could provide insights into whether certain types of cause details are systematically harder to ascertain, which may lead to their absence in the dataset. If it is found that the likelihood of a "CAUSE.CATEGORY.DETAIL" being missing is independent of its actual content after obtaining further information, we could then consider the missingness to be MAR rather than NMAR.
 
 
-
----
-
-## Hypothesis Testing
 
 **Permutation Test Description for CAUSE.CATEGORY.DETAIL Missingness depedent on CAUSE.CATEGORY**
 
@@ -153,7 +149,7 @@ The permutation test yielded a p-value of 0.087. This p-value suggests that the 
 outage duration and the missingness of cause category detail could occur by chance about 8.7% of the time 
 under the null hypothesis of no association.
 
-<iframe src="assets/Cause_Category_Missingness.html" width=1600 height=1000 frameBorder=0></iframe>
+<iframe src="assets/Cause_Category_Missingness.html" width=1200 height=600 frameBorder=0></iframe>
 
 In the context of missing data mechanisms, the findings do not strongly indicate a Non-Missing At Random (NMAR)
 situation where the probability of missingness depends on the unobserved data itself. Instead, the evidence 
@@ -193,3 +189,20 @@ It's crucial to note that the conclusion is not absolute; while we found no evid
 does not prove that no relationship exists. Other economic characteristics not analyzed here may still influence outage
 severity, or the relationship may be non-linear or moderated by other factors. Our conclusion is based on the dataset and methods
 used, and it's always possible that different data or methods could yield different results.
+
+---
+
+## Framing a Prediction Problem
+---
+
+## Baseline Model
+---
+
+## Final Model
+---
+
+## Fairness Analysis
+---
+
+
+
